@@ -6,16 +6,24 @@ import Signup from './Components/Signup';
 import Home from './Components/Home';
 // import { createBrowserHistory } from 'history';
 import {
-  BrowserRouter,
+  BrowserRouter ,
   Switch,
   Router,
   Link,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import Dash from './Components/Dash';
+import { useEffect } from 'react';
 
 
 function App() {
+
+  let userid = JSON.parse(localStorage.getItem('userid'));
+
+  useEffect(()=>{
+    console.log(userid,'===================================')
+  },[])
   // const history = createBrowserHistory();
   return (
     <div className="App">
@@ -25,9 +33,17 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/Login" component={Login} />
                 <Route exact path="/Signup" component={Signup} />
-                <Route exact path="/ItemData" component={ItemData} />
+                { userid ? (
+                  <>
+                  <Route exact path="/ItemData" component={ItemData} />
+                  <Route exact path="/Modals" component={Modals} />
+                  </>
+                ) : 
+                (
+                  <Redirect to="/" />
+                )
+                }
                 <Route exact path="/Dash" component={Dash} />
-                <Route exact path="/Modals" component={Modals} />
             </Switch>
       </BrowserRouter>
 

@@ -34,7 +34,8 @@ function ItemList() {
         console.log(userRecord, '-----------------')
     }, [list, userRecord]);
 
-    function backtologinClick() {
+    function logoutClick() {
+        localStorage.removeItem('userid');
         history.push("/");
     }
 
@@ -102,7 +103,7 @@ function ItemList() {
                 </div>
             </div>
 
-            <Button variant="primary" size="sm" onClick={backtologinClick}>
+            <Button variant="primary" size="sm" onClick={logoutClick}>
                 Back to Login
             </Button>
             {/* <Table striped bordered hover size="sm">

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+// import { browserHistory } from './react-router'
 import Modal from 'react-modal';
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import swal from 'sweetalert';
-
-
 
 const customStyles = {
   content: {
@@ -22,6 +21,7 @@ const customStyles = {
 
 function Modals() {
   let history = useHistory();
+  // const history = createBrowserHistory();
   const [user, setUser] = useState([{ userName: '', age: '' }]);
 
 
@@ -78,7 +78,7 @@ function Modals() {
       }
       itemsData.push(obj);
       localStorage.setItem('data', JSON.stringify(itemsData));
-      swal('Data added successfully', history.push('/ItemData'))
+      swal('Data added successfully',  history.push('/ItemData'))
     }
 
 
