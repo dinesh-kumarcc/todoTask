@@ -6,7 +6,7 @@ import Signup from './Components/Signup';
 import Home from './Components/Home';
 // import { createBrowserHistory } from 'history';
 import {
-  BrowserRouter ,
+  BrowserRouter,
   Switch,
   Router,
   Link,
@@ -21,30 +21,40 @@ function App() {
 
   let userid = JSON.parse(localStorage.getItem('userid'));
 
-  useEffect(()=>{
-    console.log(userid,'===================================')
-  },[])
+  useEffect(() => {
+    console.log(userid, '===================================')
+  }, [])
   // const history = createBrowserHistory();
   return (
     <div className="App">
       <BrowserRouter>
-       
+
         <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/Login" component={Login} />
-                <Route exact path="/Signup" component={Signup} />
-                { userid ? (
-                  <>
-                  <Route exact path="/ItemData" component={ItemData} />
-                  <Route exact path="/Modals" component={Modals} />
-                  </>
-                ) : 
-                (
-                  <Redirect to="/" />
-                )
-                }
-                <Route exact path="/Dash" component={Dash} />
-            </Switch>
+          {/* <Route exact path="/" component={Home} /> */}
+          {/* { ! userid ? (<Route exact path="/Login" component={Login}/>) : (<Route exact path="/Modals" component={Modals} />)} */}
+          {/* {
+            userid ? (alert("You can't login if you are logged in!"), (<Redirect to="/Modals" />)) : (<Route exact path="/Login" component={Login}/>)
+          } */}
+
+          <Route exact path="/Login" component={Login} />
+
+
+
+          {/* <Route exact path="/Signup" component={Signup} /> */}
+
+          {userid ? (
+            <>
+              <Route exact path="/ItemData" component={ItemData} />
+              <Route exact path="/Modals" component={Modals} />
+            </>
+          ) :
+            (
+              <>
+                <Redirect to="/Login" />
+              </>
+            )
+          }
+        </Switch>
       </BrowserRouter>
 
     </div>

@@ -13,8 +13,12 @@ function Login() {
     const [user, setUser] = useState([{ userName: '', Password: '' }]);
 
     useEffect(() => {
+        let userid = JSON.parse(localStorage.getItem('userid'));
+        if(userid){
+            history.push('/ItemData')
+        }
         console.log(PostData, 'postdata')
-        console.log(JSON.parse(localStorage.getItem(user)))
+        // console.log(JSON.parse(localStorage.getItem(user)))
         console.log('kkkkkk', JSON.parse(localStorage.getItem(user)))
     }, [])
 
@@ -35,7 +39,7 @@ function Login() {
             if (PostData[i].username == user.userName && PostData[i].password == user.Password) {
                 swal('Successfully Logged In')
                 localStorage.setItem('userid',JSON.stringify(PostData[i].id))
-                history.push('/Modals')
+                history.push('/ItemData')
                 break;
             }
             // history.push("/");

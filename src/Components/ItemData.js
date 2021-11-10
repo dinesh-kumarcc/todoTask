@@ -24,11 +24,14 @@ function ItemList() {
         setList(JSON.parse(localStorage.getItem('data')));
         setUserId(JSON.parse(localStorage.getItem('userid')));
         console.log(list, 'data', loginuserid, 'userid')
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].userid === loginuserid) {
-                Record.push(list[i])
-                setUserRecord(Record)
-                console.log('id match', userRecord, 'userRecord')
+        if(list){
+
+            for (let i = 0; i < list.length; i++) {
+                if (list[i].userid === loginuserid) {
+                    Record.push(list[i])
+                    setUserRecord(Record)
+                    console.log('id match', userRecord, 'userRecord')
+                }
             }
         }
         console.log(userRecord, '-----------------')
@@ -36,7 +39,7 @@ function ItemList() {
 
     function logoutClick() {
         localStorage.removeItem('userid');
-        history.push("/");
+        history.push("/Login");
     }
 
     function backtoAddItemClick() {
@@ -45,7 +48,7 @@ function ItemList() {
 
     const handleDelete = (id) => {
         setUserRecord(userRecord.splice(id, 1));
-        console.log(userRecord,'delteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+        console.log(userRecord, 'delteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
         localStorage.setItem('data', JSON.stringify(userRecord));
         // setList(list.splice(id, 1));
         // localStorage.setItem('data', JSON.stringify(list));
@@ -70,75 +73,53 @@ function ItemList() {
 
     return (
         <div>
+
             <div class="card">
-            <Button variant="primary" size="sm" onClick={backtoAddItemClick}>
-                Add more item
-            </Button>
+            {userRecord ?
+                (<>
+                        <div class="card-body">
+                            {(userRecord.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        {!disable ? (<>
+                                            <input hidden={id !== index} type="text" defaultValue={nameToBeUpdate} onChange={(e) => setNameToUpdate(e.target.value)}></input>
+                                            <input hidden={id !== index} type="text" defaultValue={ageToBeUpdate} onChange={(e) => setAgeToUpdate(e.target.value)}></input>
+                                            <Button variant="primary" size="sm" disabled={disable} hidden={id !== index} onClick={() => handleSave(index)}>Save</Button>
+                                        </>) : null}
+                                        <li>{item.name} is {item.age} years old.
+                                            <span style={{ padding: 20 }}>
+                                                <Button variant="primary" size="sm" onClick={() => handleDelete(index)}>
+                                                    Delete
+                                                </Button>
+                                            </span>
+                                            <span style={{ padding: 20 }}>
+                                                <Button variant="primary" size="sm" onClick={() => handleUpdate(item, index)}>
+                                                    Update
+                                                </Button>
+                                            </span>
+                                        </li>
 
-                <div class="card-body">
-                    {(userRecord.map((item, index) => {
-                        return (
-                            <div key={index}>
-                                {!disable ? (<>
-                                    <input hidden={id !== index} type="text" defaultValue={nameToBeUpdate} onChange={(e) => setNameToUpdate(e.target.value)}></input>
-                                    <input hidden={id !== index} type="text" defaultValue={ageToBeUpdate} onChange={(e) => setAgeToUpdate(e.target.value)}></input>
-                                    <Button variant="primary" size="sm" disabled={disable} hidden={id !== index} onClick={() => handleSave(index)}>Save</Button>
-                                </>) : null}
-                                <li>{item.name} is {item.age} years old.
-                                    <span style={{ padding: 20 }}>
-                                        <Button variant="primary" size="sm" onClick={() => handleDelete(index)}>
-                                            Delete
-                                        </Button>
-                                    </span>
-                                    <span style={{ padding: 20 }}>
-                                        <Button variant="primary" size="sm" onClick={() => handleUpdate(item, index)}>
-                                            Update
-                                        </Button>
-                                    </span>
-                                </li>
+                                    </div>
+                                )
+                            }))}
+                        </div>
+                    
+                </>) : (<>
 
-                            </div>
-                        )
-                    }))}
+
+                </>)}
+
+
                 </div>
-            </div>
 
             <Button variant="primary" size="sm" onClick={logoutClick}>
                 Back to Login
             </Button>
-            {/* <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
 
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {list.map((item, index) => {
-                        return (
-                            <tr>
-                                <td>{item.name}</td>
-                                <td>{item.age}</td>
-                                <td>
-                                    <Button variant="primary" size="sm" onClick={() => handleDelete(index)}>
-                                    Delete
-                                    </Button>
-                                    <Button variant="primary" size="sm" onClick={() => handleUpdate(item, index)}>
-                                    Update
-                                    </Button>
-                                    
-                                    <button onClick={() => handleDelete(index)} style={{ marginLeft: '10px' }}>Delete</button>
-                                    <button onClick={() => handleUpdate(item, index)} style={{ marginLeft: '5px' }}>Update</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
+            <Button variant="primary" size="sm" onClick={backtoAddItemClick}>
+                        Add more item
+                    </Button>
 
-
-                </tbody>
-            </Table> */}
 
         </div>
     )
