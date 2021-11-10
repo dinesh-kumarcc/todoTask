@@ -65,7 +65,7 @@ function Modals() {
       let names = itemsData.map(item => item.name.toLowerCase());
       if (names.indexOf(user.userName.toLowerCase()) >= 0) {
         swal('Name already exist!!');
-        return;
+        return;  
       }
       let obj = {};
       obj['id'] = Math.random();
