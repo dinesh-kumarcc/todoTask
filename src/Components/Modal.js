@@ -67,7 +67,7 @@ function Modals() {
         swal('Name already exist!!');
         return;  
       }
-      let obj = {};
+      let obj = {};  
       obj['id'] = Math.random();
       obj['name'] = user.userName;
       obj['age'] = user.age;
